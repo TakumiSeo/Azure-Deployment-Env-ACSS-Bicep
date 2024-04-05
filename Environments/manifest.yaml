@@ -11,11 +11,9 @@ parameters:
     description: 'Vnet address prefix'
     type: string
     default: '10.0.0.0/16'
-    required: true
 
   - id: subnetAddressPrefix
     name: SubnetAddressPref
     description: 'Subnet address prefix'
     type: string
     default: '10.0.0.0/24'
-    required: true
