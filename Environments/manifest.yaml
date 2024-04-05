@@ -6,9 +6,16 @@ runner: ARM
 templatePath: az_deploy.json
 
 parameters:
-  - id: name
-    vnetAddressPrefix: '10.0.0.0/16'
-    subnetAddressPrefix: '10.0.0.0/24'
+  - id: vnetAddressPrefix
+    name: VnetAddressPrefix
     description: 'Vnet address prefix'
     type: string
+    default: '10.0.0.0/16'
+    required: true
+
+  - id: subnetAddressPrefix
+    name: SubnetAddressPref
+    description: 'Subnet address prefix'
+    type: string
+    default: '10.0.0.0/24'
     required: true
