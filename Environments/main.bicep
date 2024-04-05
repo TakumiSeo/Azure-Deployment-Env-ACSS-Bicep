@@ -2,10 +2,10 @@
 param location string = resourceGroup().location
 
 @description('the addressprefix of the virtual network')
-param vnetAddressPrefix string
+param vnetAddressPrefix string = '10.0.0.0/16'
 
 @description('the subnet prefix of the virtual network')
-param subnetAddressPrefix string
+param subnetAddressPrefix string = '10.0.0.0/24'
 
 
 module suseIpList 'modules/deploymentscript/suse.bicep' = {
