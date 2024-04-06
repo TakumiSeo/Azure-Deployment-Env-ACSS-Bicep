@@ -46,10 +46,11 @@ jobs:
         
         - name: Commit changes
           run: |
-            git config --global user.name "${{ github.actor }}"
-            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-            git commit -am "Rebuild ARM templates"
-            git push
+                git config --global user.name "TakumiSeo"
+                git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+                git checkout -b rebuild-arm-templates
+                git commit -am "Rebuild ARM templates"
+                git push origin rebuild-arm-templates
 
         
 
