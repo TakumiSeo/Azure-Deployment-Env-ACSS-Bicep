@@ -53,7 +53,7 @@ jobs:
           shell: bash {0}
           run: |
             echo "Getting environment ${{ env.ENVIRONMENT_NAME }}..."
-            environment_rg=$(az devcenter dev environment show --name ${{ env.ENVIRONMENT_NAME }} \
+            environment_rg=$(az devcenter dev environment show --name "acssenvironment"  \
                 --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
                 --only-show-errors --query resourceGroupId --output tsv 2>&1)
   
@@ -96,6 +96,6 @@ jobs:
           run: |
             parameters=$(cat Azure-Deployment-Env-ACSS-Bicep/az_deploy.parameters.json)
             echo "Updating environment ${{ env.ENVIRONMENT_NAME }}..."
-            az devcenter dev environment update --name ${{ env.ENVIRONMENT_NAME }} --resource-group ${{ env.ENVIRONMENT_GROUP }} \
+            az devcenter dev environment update --name "acssenvironment" --resource-group ${{ env.ENVIRONMENT_GROUP }} \
                 --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} --parameters "$parameters" \
                 --only-show-errors --output none
