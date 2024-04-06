@@ -53,7 +53,7 @@ jobs:
           shell: bash {0}
           run: |
             echo "Getting environment ${{ env.ENVIRONMENT_NAME }}..."
-            environment_rg=$(az devcenter dev environment show --name ${{ env.ENVIRONMENT_NAME }} \
+            environment_rg=$(az devcenter dev environment show --name "acssenvironment"  \
                 --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
                 --only-show-errors --query resourceGroupId --output tsv 2>&1)
   
