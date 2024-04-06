@@ -48,9 +48,8 @@ jobs:
           run: |
                 git config --global user.name "TakumiSeo"
                 git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-                git checkout -b rebuild-arm-templates
                 git commit -am "Rebuild ARM templates"
-                git push origin rebuild-arm-templates
+                git push
 
         
 
