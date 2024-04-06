@@ -3,7 +3,7 @@ version: 1.0.0
 summary: Azure Center of SAP Solution Basement Environment
 description: Deploys an ACSS prerequisite
 runner: ARM
-templatePath: az_deploy.json
+templatePath: main.bicep
 
 parameters:
   - id: vnetAddressPrefix
