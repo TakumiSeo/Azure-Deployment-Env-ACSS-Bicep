@@ -96,6 +96,7 @@ jobs:
           run: |
             parameters=$(cat Azure-Deployment-Env-ACSS-Bicep/az_deploy.parameters.json)
             echo "Updating environment ${{ env.ENVIRONMENT_NAME }}..."
-            az devcenter dev environment update --name "production-acss" --resource-group ${{ env.ENVIRONMENT_GROUP }} \
-                --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} --parameters "$parameters" \
-                --only-show-errors --output none
+            az devcenter dev environment update --dev-center-name ${{ vars.AZURE_DEVCENTER }} --project-name  ${{ vars.AZURE_PROJECT }} --name "production-acss" --parameters "$parameters"
+        # az devcenter dev environment update --name "production-acss" --resource-group ${{ env.ENVIRONMENT_GROUP }} \
+        #     --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} --parameters "$parameters" \
+        #     --only-show-errors --output none
