@@ -43,11 +43,13 @@ jobs:
                 
                 if __name__ == '__main__':
                         main()
+        
+        - name: Commit changes
+          run: |
+            git config --global user.name "${{ github.actor }}"
+            git config --global user.email "${{ github.actor }}@users.noreply.github.com"
+            git commit -am "Rebuild ARM templates"
+            git push
 
-                - name: Commit changes
-                    run: |
-                        git config --global user.name "${{ github.actor }}"
-                        git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-                        git commit -am "Rebuild ARM templates"
-                        git push
+        
 
