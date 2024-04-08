@@ -32,9 +32,6 @@ jobs:
     steps:
       - uses: actions/checkout@v3
 
-      - name: Build ADE.Tutorial
-        run: dotnet publish ./ADE.Tutorial -c Release -o ./publish && (cd ./publish && zip -r ../publish.zip .)
-
       - name: Install DevCenter CLI Extension
         run: az extension add --name devcenter --upgrade
 
@@ -73,9 +70,8 @@ jobs:
 
           echo "- [View environment resources in the Azure portal](https://portal.azure.com/#@${{ vars.AZURE_TENANT_ID }}/resource$environment_rg)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Deploy ADE.Tutorial
+      - name: Deploy Environments
         run: |
-          az functionapp deployment source config-zip --name ${{ env.ENVIRONMENT_NAME }} --src publish.zip \
-              --subscription ${{ env.ENVIRONMENT_SUB }} --resource-group ${{ env.ENVIRONMENT_GROUP }}
-
-          echo "- [View the deployed API](https://${{ env.ENVIRONMENT_NAME }}.azurewebsites.net/api/time)" >> $GITHUB_STEP_SUMMARY
+            parameters=$(cat Azure-Deployment-Env-ACSS-Bicep/az_deploy.parameters.json)
+            az devcenter dev environment deploy-action --action-id "deploy" --dev-center-name ${{ vars.AZURE_DEVCENTER }} \
+            -g ${{ env.ENVIRONMENT_GROUP }} --project-name ${{ vars.AZURE_PROJECT }} --environment-name ${{ env.ENVIRONMENT_NAME }} --parameters "$parameters"
