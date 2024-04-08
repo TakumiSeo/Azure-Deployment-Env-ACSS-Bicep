@@ -31,6 +31,12 @@ jobs:
 
     steps:
       - uses: actions/checkout@v3
+      - name: Install required packages
+        run: |
+            apt-get update
+            apt-get install -y jq
+            wget https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+        
 
       - name: Install DevCenter CLI Extension
         run: az extension add --name devcenter --upgrade
@@ -44,11 +50,13 @@ jobs:
 
       - name: Create Environment
         run: |
+          parameters=$(jq -r '.parameters | with_entries(.value = .value.value)' ../az_deploy.parameters.json)
+          environmet_def_name=$(yq e '.name' ../manifest.yaml)
           az devcenter dev environment create \
               --name ${{ env.ENVIRONMENT_NAME }} --environment-type ${{ env.ENVIRONMENT_TYPE }} \
               --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
-              --catalog-name ${{ vars.AZURE_CATALOG }} --environment-definition-name ${{ vars.AZURE_CATALOG_ITEM }} \
-              --parameters '{ "name": "${{ env.ENVIRONMENT_NAME }}" }' --only-show-errors
+              --catalog-name ${{ vars.AZURE_CATALOG }} --environment-definition-name  "$envronment_def_name"\
+              --parameters "$parameters" --only-show-errors
 
       - name: Get Resource Group
         shell: bash {0}
@@ -70,8 +78,8 @@ jobs:
 
           echo "- [View environment resources in the Azure portal](https://portal.azure.com/#@${{ vars.AZURE_TENANT_ID }}/resource$environment_rg)" >> $GITHUB_STEP_SUMMARY
 
-      - name: Deploy Environments
-        run: |
-            parameters=$(cat Azure-Deployment-Env-ACSS-Bicep/az_deploy.parameters.json)
-            az devcenter dev environment deploy-action --action-id "deploy" --dev-center-name ${{ vars.AZURE_DEVCENTER }} \
-            -g ${{ env.ENVIRONMENT_GROUP }} --project-name ${{ vars.AZURE_PROJECT }} --environment-name ${{ env.ENVIRONMENT_NAME }} --parameters "$parameters"
+    #   - name: Deploy Environments
+    #     run: |
+    #         parameters=$(cat Azure-Deployment-Env-ACSS-Bicep/az_deploy.parameters.json)
+    #         az devcenter dev environment deploy-action --action-id "deploy" --dev-center-name ${{ vars.AZURE_DEVCENTER }} \
+    #         -g ${{ env.ENVIRONMENT_GROUP }} --project-name ${{ vars.AZURE_PROJECT }} --environment-name ${{ env.ENVIRONMENT_NAME }} --parameters "$parameters"
