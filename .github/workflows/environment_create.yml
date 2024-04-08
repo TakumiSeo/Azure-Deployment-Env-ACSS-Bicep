@@ -33,9 +33,9 @@ jobs:
       - uses: actions/checkout@v3
       - name: Install required packages
         run: |
-            apt-get update
-            apt-get install -y jq
-            wget https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
+            sudo apt-get update
+            sudo apt-get install -y jq
+            sudo wget https://github.com/mikefarah/yq/releases/download/v4.6.1/yq_linux_amd64 -O /usr/bin/yq && chmod +x /usr/bin/yq
         
 
       - name: Install DevCenter CLI Extension
@@ -50,8 +50,8 @@ jobs:
 
       - name: Create Environment
         run: |
-          parameters=$(jq -r '.parameters | with_entries(.value = .value.value)' ../az_deploy.parameters.json)
-          environmet_def_name=$(yq e '.name' ../manifest.yaml)
+          parameters=$(sudo jq -r '.parameters | with_entries(.value = .value.value)' ../az_deploy.parameters.json)
+          environmet_def_name=$(sudo yq e '.name' ../manifest.yaml)
           az devcenter dev environment create \
               --name ${{ env.ENVIRONMENT_NAME }} --environment-type ${{ env.ENVIRONMENT_TYPE }} \
               --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
