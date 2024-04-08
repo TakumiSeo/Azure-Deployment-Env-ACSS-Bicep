@@ -50,8 +50,8 @@ jobs:
 
       - name: Create Environment
         run: |
-          parameters=$(sudo jq -r '.parameters | with_entries(.value = .value.value)' ../az_deploy.parameters.json)
-          environmet_def_name=$(sudo yq e '.name' ../manifest.yaml)
+          parameters=$(sudo jq -r '.parameters | with_entries(.value = .value.value)' ./az_deploy.parameters.json)
+          environmet_def_name=$(sudo yq e '.name' ./manifest.yaml)
           az devcenter dev environment create \
               --name ${{ env.ENVIRONMENT_NAME }} --environment-type ${{ env.ENVIRONMENT_TYPE }} \
               --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
