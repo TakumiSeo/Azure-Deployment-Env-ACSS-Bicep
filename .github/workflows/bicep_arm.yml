@@ -25,7 +25,7 @@ jobs:
           run: |
                 git config --global user.name "TakumiSeo"
                 git config --global user.email "${{ github.actor }}@users.noreply.github.com"
-                git add ./Environments/az_deploy.json ./Environments/aaz_deploy.parameters.json
+                git add ./Environments/az_deploy.json ./Environments/az_deploy.parameters.json
                 git commit -am "Rebuild ARM templates"
                 git push
 
