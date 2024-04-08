@@ -49,11 +49,10 @@ jobs:
       - name: Create Environment
         run: |
           parameters=$(sudo jq -r '.parameters | with_entries(.value = .value.value)' ./Environments/az_deploy.parameters.json)
-          environmet_def_name=$(az devcenter dev environment-definition list --dev-center ${{ vars.AZURE_DEVCENTER }}  --project ${{ vars.AZURE_PROJECT }} --catalog-name ${{ vars.AZURE_PROJECT }} --query "[].name" -o tsv)
           az devcenter dev environment create \
               --name ${{ env.ENVIRONMENT_NAME }} --environment-type ${{ env.ENVIRONMENT_TYPE }} \
               --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
-              --catalog-name ${{ vars.AZURE_CATALOG }} --environment-definition-name  $envronment_def_name\
+              --catalog-name ${{ vars.AZURE_CATALOG }} --environment-definition-name "ACSS" \
               --parameters "$parameters" --only-show-errors
 
       - name: Get Resource Group
