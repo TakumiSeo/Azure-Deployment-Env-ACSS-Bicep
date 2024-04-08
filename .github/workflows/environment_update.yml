@@ -87,15 +87,8 @@ jobs:
   
             echo "- [View environment resources in the Azure portal](https://portal.azure.com/#@${{ vars.AZURE_TENANT_ID }}/resource$environment_rg)" >> $GITHUB_STEP_SUMMARY
   
-        # - name: Deploy Environment
-        #   run: |
-        #     az devcenter dev environment deploy-action --action-id "deploy" --dev-center-name ${{ vars.AZURE_DEVCENTER }} -g  --project-name ${{ vars.AZURE_PROJECT }} --environment-name ${{ env.ENVIRONMENT_TYPE }} --parameters 
-
         - name: Update Environment
           run: |
-            parameters=$(cat Azure-Deployment-Env-ACSS-Bicep/az_deploy.parameters.json)
+            parameters=$(sudo jq -r '.parameters | with_entries(.value = .value.value)' ./Environments/az_deploy.parameters.json)
             echo "Updating environment ${{ env.ENVIRONMENT_NAME }}..."
             az devcenter dev environment update --dev-center-name ${{ vars.AZURE_DEVCENTER }} --project-name  ${{ vars.AZURE_PROJECT }} --name ${{ env.ENVIRONMENT_NAME }} --parameters "$parameters"
-        # az devcenter dev environment update --name "production-acss" --resource-group ${{ env.ENVIRONMENT_GROUP }} \
-        #     --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} --parameters "$parameters" \
-        #     --only-show-errors --output none
