@@ -61,12 +61,12 @@ jobs:
                 # Prod (main) environment may not be created yet
                 if [[ $environment_rg =~ "EnvironmentCannotBeFound" || $environment_rg =~ "EnvironmentNotFound" ]] && [[ "$ENVIRONMENT_TYPE" == "Prod" ]]; then
                     echo "Environment ${{ env.ENVIRONMENT_NAME }} not found, creating..."
-  
+                    parameters=$(sudo jq -r '.parameters | with_entries(.value = .value.value)' ./Environments/az_deploy.parameters.json)
                     environment_rg=$(az devcenter dev environment create \
                         --name ${{ env.ENVIRONMENT_NAME }} --environment-type ${{ env.ENVIRONMENT_TYPE }} \
                         --dev-center ${{ vars.AZURE_DEVCENTER }} --project ${{ vars.AZURE_PROJECT }} \
-                        --catalog-name ${{ vars.AZURE_CATALOG }} --environment-definition-name ${{ vars.AZURE_CATALOG_ITEM }} \
-                        --parameters '{ "name": "${{ env.ENVIRONMENT_NAME }}" }' --only-show-errors \
+                        --catalog-name ${{ vars.AZURE_CATALOG }} --environment-definition-name "ACSS" \
+                        --parameters "$parameters" --only-show-errors \
                         --query resourceGroupId --output tsv 2>&1)
   
                     if [ $? -ne 0 ]; then
