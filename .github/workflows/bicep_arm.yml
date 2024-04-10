@@ -2,7 +2,9 @@ name: Bicep -> ARM
 
 on:
     push:
-        branches: ['*']
+        branches:
+            - '*' # This will match all branches
+            - '!main' # This will exclude the main branch
         paths:
             # only run if bicep file changed
             - 'Environments/*.bicep'
@@ -11,13 +13,12 @@ on:
 jobs:
     build:
         runs-on: ubuntu-latest
-        
+    
         permissions:
             contents: write
-        
+    
         steps:
         - uses: actions/checkout@v3
-        
         - name: Build Bicep -> ARM
           run:  python ./tools/build-arm.py
         
