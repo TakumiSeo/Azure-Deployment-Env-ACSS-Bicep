@@ -4,8 +4,8 @@
   "metadata": {
     "_generator": {
       "name": "bicep",
-      "version": "0.26.54.24096",
-      "templateHash": "5607935524293889493"
+      "version": "0.29.47.4906",
+      "templateHash": "15239373425670222881"
     }
   },
   "parameters": {
@@ -25,7 +25,7 @@
     },
     "subnetAddressPrefix": {
       "type": "string",
-      "defaultValue": "10.0.0.0/20",
+      "defaultValue": "10.0.0.0/23",
       "metadata": {
         "description": "the subnet prefix of the virtual network"
       }
@@ -52,8 +52,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.54.24096",
-              "templateHash": "2854553613395704781"
+              "version": "0.29.47.4906",
+              "templateHash": "12380108270699212824"
             }
           },
           "parameters": {
@@ -192,8 +192,8 @@
           "metadata": {
             "_generator": {
               "name": "bicep",
-              "version": "0.26.54.24096",
-              "templateHash": "12307123333191642370"
+              "version": "0.29.47.4906",
+              "templateHash": "17134510352638623282"
             }
           },
           "parameters": {
